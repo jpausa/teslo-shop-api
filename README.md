@@ -8,11 +8,15 @@
 2. ```yarn install```
 3. Clone the ```.env.template``` file and rename it to ```.env```
 4. Fill the env vars info
-5. Build the database
+5. Build and up the database
 ```
 docker-compose up -d
 ```
-6. Start the app with
+6. Load seed data
+```
+https://localhost:3000/api/seed
+```
+7. Start the app with
 ```
 yarn start:dev
-```
+``` 
