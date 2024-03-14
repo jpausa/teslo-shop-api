@@ -12,11 +12,11 @@
 ```
 docker-compose up -d
 ```
-6. Load seed data
-```
-https://localhost:3000/api/seed
-```
-7. Start the app with
+6. Start the app with
 ```
 yarn start:dev
 ``` 
+7. Load seed data
+```
+https://localhost:3000/api/seed
+```
