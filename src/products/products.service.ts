@@ -13,6 +13,7 @@ import { DataSource, Repository } from 'typeorm';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import { isUUID } from 'class-validator';
 import { ProductImage } from './entities';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ProductsService {
@@ -24,6 +25,8 @@ export class ProductsService {
     private readonly productImageRepository: Repository<ProductImage>,
 
     private readonly dataSource: DataSource,
+
+    private readonly configService: ConfigService,
   ) {}
   async create(createProductDto: CreateProductDto) {
     const { images = [], ...productDetails } = createProductDto;
@@ -55,7 +58,10 @@ export class ProductsService {
       offset,
       data: products.map((product) => ({
         ...product,
-        images: product.images.map((image) => image.url),
+        images: product.images.map(
+          (image) =>
+            `${this.configService.get<string>('hostApi')}/files/product/${image.url}`,
+        ),
       })),
     };
   }
@@ -79,7 +85,13 @@ export class ProductsService {
     if (!product)
       throw new NotFoundException(`Product with id ${term} not found`);
 
-    return { ...product, images: product.images.map((image) => image.url) };
+    return {
+      ...product,
+      images: product.images.map(
+        (image) =>
+          `${this.configService.get<string>('hostApi')}/files/product/${image.url}`,
+      ),
+    };
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {

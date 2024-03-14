@@ -8,5 +8,6 @@ export const EnvConfig = () => {
       debPort: +process.env.DB_PORT || 5432,
     },
     port: +process.env.PORT || 3000,
+    hostApi: process.env.HOST_API || 'http://localhost:3000',
   };
 };
